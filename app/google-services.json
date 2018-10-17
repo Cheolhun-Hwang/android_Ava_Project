@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "843384817636",
+    "firebase_url": "https://dynamiclist-27cbe.firebaseio.com",
+    "project_id": "dynamiclist-27cbe",
+    "storage_bucket": "dynamiclist-27cbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843384817636:android:16db863d6d0657cd",
+        "android_client_info": {
+          "package_name": "com.hch.hooney.avaappproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843384817636-2l6nc6uer29aslqno4il2sqskp1s2fag.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hch.hooney.avaappproject",
+            "certificate_hash": "5b1b0b99a41e269e8f52545607105e444820ae70"
+          }
+        },
+        {
+          "client_id": "843384817636-j78dfjs6q9p7pg7rp78kdrqbtu721c7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqcIhf1sNUDPK2v1svXXeUFMDfsUaiLZ8"
+        },
+        {
+          "current_key": "AIzaSyBUMtBd8XKMPEQNernSO9KQ5gyCVlNZBhI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843384817636-j78dfjs6q9p7pg7rp78kdrqbtu721c7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843384817636:android:8f0649fabed65d91",
+        "android_client_info": {
+          "package_name": "list.dynamic.hch.dynamiclist_movie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843384817636-2lh7tsac0u79laohu70efshhoviul06k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "list.dynamic.hch.dynamiclist_movie",
+            "certificate_hash": "3f51bdf4eb531cf7ce660f50b79b6d87eb5b8c0c"
+          }
+        },
+        {
+          "client_id": "843384817636-j78dfjs6q9p7pg7rp78kdrqbtu721c7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqcIhf1sNUDPK2v1svXXeUFMDfsUaiLZ8"
+        },
+        {
+          "current_key": "AIzaSyBUMtBd8XKMPEQNernSO9KQ5gyCVlNZBhI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843384817636-j78dfjs6q9p7pg7rp78kdrqbtu721c7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

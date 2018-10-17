@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AvA</string>
+
+    <string name="init_thank_purchase">구매해주셔서 감사합니다.</string>
+    <string name="init_ask_blut_key">인공지능 비서와 인증키를 작성해주세요.</string>
+
+    <string name="main_home_weather_notify_location_sensor">날씨 정보를 얻기 위해\n지역을 설정해주세요.</string>
+</resources>

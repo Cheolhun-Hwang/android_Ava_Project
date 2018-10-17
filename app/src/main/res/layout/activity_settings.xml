@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SettingsActivity">
+
+    <RelativeLayout
+        android:backgroundTint="@color/violet_theme"
+        android:background="@drawable/actionbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="68sp">
+
+        <ImageButton
+            android:layout_marginLeft="5sp"
+            android:id="@+id/setting_back"
+            android:scaleType="fitCenter"
+            android:tint="@color/white"
+            android:src="@drawable/ic_arrow_back_maincolor"
+            android:background="@color/alpha"
+            android:layout_centerVertical="true"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+
+        <ImageView
+            android:layout_marginLeft="55sp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:tint="@color/white"
+            android:src="@drawable/ic_settings_maincolor"
+            android:layout_width="26sp"
+            android:layout_height="26sp" />
+
+        <TextView
+            android:layout_marginLeft="90sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:textSize="21.5sp"
+            android:textColor="@color/white"
+            android:text="설정"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_margin="15sp"
+            android:paddingRight="15sp"
+            android:id="@+id/setting_version"
+            android:gravity="center|right"
+            android:text="Ver 1.0.0"
+            android:textColor="@color/white"
+            android:textSize="17.5sp"
+            android:textStyle="bold"
+            android:layout_marginRight="14sp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:background="@color/grey_100"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="0.5sp"
+                    android:layout_marginLeft="11.5sp"
+                    android:layout_marginRight="11.5sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45sp">
+
+                    <TextView
+                    android:gravity="center"
+                    android:layout_weight="0.4"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="닉네임"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/setting_nick_notify_text"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textColor="@color/grey_600"
+                        android:textStyle="bold|italic"
+                        android:textSize="13sp"
+                        android:text="닉네임"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/setting_nick_change_btn"
+                        android:layout_margin="7sp"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:background="@color/violet_theme"
+                        android:text="변경"
+                        android:layout_weight="0.1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:background="@color/white"
+                    android:id="@+id/setting_useBlueth"
+                    android:theme="@style/mySwitch"
+                    app:switchMinWidth="75sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:paddingTop="11.5sp"
+                    android:paddingBottom="11.5sp"
+                    android:paddingLeft="23sp"
+                    android:paddingRight="23sp"
+                    android:layout_marginTop="0.5sp"
+                    android:layout_marginBottom="1.5sp"
+                    android:layout_marginLeft="11.5sp"
+                    android:layout_marginRight="11.5sp"
+                    android:text="블루투스"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <LinearLayout
+                    android:id="@+id/setting_wifi_connection"
+                    android:padding="11.5sp"
+                    android:background="@color/white"
+                    android:layout_marginTop="7.5sp"
+                    android:layout_marginLeft="11.5sp"
+                    android:layout_marginRight="11.5sp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="45sp">
+                    <TextView
+                        android:id="@+id/setting_now_ava_ssid"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="13.5sp"
+                        android:textColor="@color/black"
+                        android:text="ssid"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <ImageView
+                        android:scaleType="centerInside"
+                        android:tint="@color/blue_600"
+                        android:src="@drawable/wi_fi"
+                        android:layout_weight="1.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="25sp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/setting_init_button"
+                    android:background="@drawable/button_round_main"
+                    android:textColor="@color/white"
+                    android:textSize="16.5sp"
+                    android:textStyle="bold"
+                    android:text="초기화"
+                    android:layout_width="150sp"
+                    android:layout_height="36sp" />
+
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/setting_init_progress"
+                    android:indeterminateTint="@color/violet_theme"
+                    android:layout_width="64sp"
+                    android:layout_height="64sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

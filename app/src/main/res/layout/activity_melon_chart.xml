@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey_200"
+    tools:context=".MelonChartActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp">
+        <ImageButton
+            android:id="@+id/melon_chart_back"
+            android:layout_centerVertical="true"
+            android:background="@color/alpha"
+            android:tint="@color/black"
+            android:scaleType="fitXY"
+            android:layout_margin="5sp"
+            android:src="@drawable/ic_arrow_back_maincolor"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+
+        <Button
+            android:id="@+id/melon_chart_melon"
+            android:layout_alignParentRight="true"
+            android:layout_margin="6sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="Melon"
+            android:background="#00CD3C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/title2"
+            android:layout_width="match_parent"
+            android:layout_height="48sp" />
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="11sp"
+            android:gravity="center"
+            android:text="당신의 알찬 생활을 위해서 AvA 가 가져왔어요 !"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textStyle="bold|italic"
+            android:textColor="@color/grey_600"
+            android:layout_marginTop="11sp"
+            android:gravity="center"
+            android:text="#Melon #Music #forYourLife #toAVA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <com.yarolegovich.discretescrollview.DiscreteScrollView
+        android:visibility="gone"
+        android:id="@+id/melon_chart_movie_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:dsv_orientation="vertical" />
+
+    <ProgressBar
+        android:indeterminateTint="@color/main_green"
+        android:id="@+id/melon_chart_progress"
+        android:layout_marginTop="60sp"
+        android:layout_gravity="center"
+        android:layout_width="128sp"
+        android:layout_height="128sp" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/melon_chart_noData"
+        android:paddingTop="32sp"
+        android:gravity="center|top"
+        android:text="음원 차트 정보를 받지 못했습니다.\n다시 시도해주세요."
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

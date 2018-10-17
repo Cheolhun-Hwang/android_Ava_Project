@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey_200"
+    tools:context=".LedActivity">
+
+    <RelativeLayout
+        android:backgroundTint="@color/red_led"
+        android:background="@drawable/actionbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="68sp">
+
+
+        <ImageView
+            android:layout_width="26sp"
+            android:layout_height="26sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/led" />
+
+        <TextView
+            android:layout_marginLeft="85sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:textSize="21.5sp"
+            android:textColor="@color/white"
+            android:text="무드등"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/led_back_btn"
+            android:tint="@color/white"
+            android:src="@drawable/ic_arrow_back_maincolor"
+            android:background="@color/alpha"
+            android:layout_marginLeft="15sp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+
+        <ImageButton
+            android:id="@+id/led_color_save"
+            android:layout_marginRight="48sp"
+            android:layout_alignRight="@id/led_color_off"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_loyalty"
+            android:background="@color/alpha"
+            android:layout_centerVertical="true"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+
+        <ImageButton
+            android:id="@+id/led_color_off"
+            android:layout_marginRight="15sp"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_power_settings"
+            android:background="@color/alpha"
+            android:layout_centerVertical="true"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="#"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/grey_700"
+            android:layout_weight="2.5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <EditText
+            android:layout_marginTop="2sp"
+            android:layout_marginBottom="2sp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:maxLines="1"
+            android:maxLength="6"
+            android:id="@+id/led_color_text"
+            android:padding="3sp"
+            android:hint="ffffff"
+            android:layout_weight="1"
+            android:background="@drawable/edit_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <Button
+            android:backgroundTint="@color/red_led"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14.5sp"
+            android:text="색상변경"
+            android:id="@+id/led_complete"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <HorizontalScrollView
+        android:minHeight="35sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_gravity="center|left"
+            android:id="@+id/led_linear_horizontal_colors"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40sp">
+            <TextView
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp"
+                android:gravity="center"
+                android:textSize="14.5sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="사용자 저장 색상 : "
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </HorizontalScrollView>
+    <RelativeLayout
+        android:layout_margin="10sp"
+        android:orientation="vertical"
+        android:background="@drawable/background_round_white_noshadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/led_image"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/alpha"
+            android:padding="25sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/led"
+            android:tint="@color/grey_700" />
+        <TextView
+            android:id="@+id/led_now_state"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:textSize="12.5sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="13sp"
+            android:layout_marginRight="15sp"
+            android:text="현재 상태 : off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="12.5sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:layout_marginBottom="32sp"
+            android:layout_marginTop="32sp"
+            android:visibility="visible"
+            android:id="@+id/led_progress"
+            android:layout_width="96sp"
+            android:layout_height="96sp"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/red_led" />
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.jaredrummler.android.colorpicker.ColorPickerView
+            android:id="@+id/led_color_picker_view"
+            app:cpv_alphaChannelVisible="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+</LinearLayout>
+

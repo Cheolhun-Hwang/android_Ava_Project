@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".MicActivity">
+
+    <TextView
+        android:id="@+id/mic_notify_question_text"
+        android:layout_marginTop="12sp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/red_600"
+        android:text="\?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:layout_marginTop="12sp"
+        android:visibility="gone"
+        android:id="@+id/mic_notify_progress"
+        android:indeterminateTint="@color/main_green"
+        android:layout_width="match_parent"
+        android:layout_height="40sp" />
+
+    <ImageView
+        android:src="@drawable/title2"
+        android:layout_width="match_parent"
+        android:layout_height="64sp" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="11sp"
+        android:gravity="center"
+        android:text="AvA 가 당신의 명령을 기다리고 있습니다."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginRight="15sp"
+        android:layout_marginLeft="15sp"
+        android:layout_marginTop="30sp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/grey_700"
+        android:text="# AvA 에게 다음의 명령을 알아듣습니다."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:background="@color/grey_200"
+        android:layout_marginTop="5sp"
+        android:layout_marginRight="15sp"
+        android:layout_marginLeft="15sp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0sp">
+        <LinearLayout
+            android:paddingTop="1sp"
+            android:paddingBottom="1sp"
+            android:paddingLeft="0.5sp"
+            android:paddingRight="0.5sp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:textColor="@color/grey_700"
+                    android:text="# 무드등"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 불빛 켜줘 / 꺼줘"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 등 켜줘 / 꺼줘"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 무드등 켜줘 / 꺼줘"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="12sp"
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:textColor="@color/grey_700"
+                    android:text="# 날씨"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 오늘 날씨"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 날씨 정보"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 날씨 어때?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 바깥 날씨 알려줘"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 내일 날씨"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 모레 날씨 알려줘"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12sp"
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:textColor="@color/grey_700"
+                    android:text="# Life"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 영화 순위"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 오늘 영화 순위는?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 멜론 순위"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 오늘 멜론 순위는?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12sp"
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:textColor="@color/grey_700"
+                    android:text="# 심심풀이"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginLeft="15sp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 안녕?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 이름이 뭐야? / 넌 누구야?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 너 몇살이야?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 너 짜증나!"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 대답해줘"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 너 재수없어"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 너 재수없어"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 너 재미없어"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 네 주인이 누구야?"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 도움!"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 너 멋져"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 넌 최고야!"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="@color/grey_700"
+                        android:text="- 배고파"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".AuthCodeActivity">
+
+    <RelativeLayout
+        android:layout_marginTop="50sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="360sp"
+            android:layout_centerVertical="true"
+            android:layout_margin="20sp"
+            android:background="@drawable/round_white_background"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:src="@drawable/title2" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17sp"
+                android:gravity="center"
+                android:text="@string/init_thank_purchase"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45sp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:paddingLeft="50sp"
+                android:paddingRight="50sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/init_ask_blut_key"
+                    android:textColor="@color/black"
+                    android:textSize="13.5sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/init_bluth_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_back"
+                    android:maxLines="1"
+                    android:padding="4.5sp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20sp"
+                    android:layout_marginTop="15sp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:visibility="gone"
+                        android:id="@+id/init_testMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="테스트 모드" />
+
+                    <Button
+                        android:id="@+id/init_connect_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/main_green"
+                        android:text="인증하기"
+                        android:textColor="@color/white"
+                        android:textSize="16.5sp"
+                        android:textStyle="bold" />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/init_progress_bar"
+                        android:indeterminateTint="@color/main_green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

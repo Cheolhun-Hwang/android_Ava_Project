@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_marginTop="25sp"
+        android:layout_marginBottom="25sp"
+        android:layout_marginLeft="7sp"
+        android:layout_marginRight="7sp"
+        android:background="@drawable/round_white_box"
+        android:orientation="vertical"
+        android:minWidth="300sp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/item_movie_chart_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/noimage"
+            app:sriv_left_top_corner_radius="15sp"
+            app:sriv_right_top_corner_radius="15sp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:gravity="center"
+            android:padding="7.5sp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="95sp">
+            <TextView
+                android:id="@+id/item_movie_chart_rank_and_name"
+                android:textSize="19sp"
+                android:text="1. 영화이름"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/item_movie_chart_show_date"
+                android:layout_marginLeft="7sp"
+                android:textSize="12sp"
+                android:text="[ 개봉일 : 0000.00.00 ]"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/item_movie_chart_ticket_sales"
+                android:layout_marginTop="3.5sp"
+                android:layout_marginBottom="3.5sp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="예매율 : 30.6%"
+                android:textStyle="bold"
+                android:textColor="@color/red_600"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

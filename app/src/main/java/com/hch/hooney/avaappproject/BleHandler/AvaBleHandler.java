@@ -57,8 +57,6 @@ public class AvaBleHandler {
     public List<UUID> serviceUUIDList;
     public BluetoothGattCharacteristic authBGC;
     public BluetoothGattCharacteristic wifiBGC;
-    public BluetoothGattCharacteristic ledBGC;
-    public BluetoothGattCharacteristic radioBGC;
 
     private String beforeMacAddress;
 
@@ -108,7 +106,7 @@ public class AvaBleHandler {
                                      byte[] scanRecord) {
                     Log.i(TAG, "device : " + device);
                     if(device.getName() != null){
-                        if(device.getName().toLowerCase().contains("ava_rasp")){
+                        if(device.getName().toLowerCase().contains("ava")){
                             Log.i(TAG, "Before API Search : " + device.toString());
                             Log.i(TAG, "Before API Search Name: " + device.getName());
                             connectToDevice(device);
@@ -124,46 +122,13 @@ public class AvaBleHandler {
         public void onScanResult(int callbackType, ScanResult result) {
             if(beforeMacAddress != null){
                 //Mac Address Match....
+                Log.d(TAG, "BLE Mac Address Exist");
                 if(beforeMacAddress.equals(result.getDevice().getAddress())){
-                    if(result.getDevice() != null){
-                        if(result.getDevice().getName()!= null){
-                            Log.d(TAG, "Device Name : " + result.getDevice().getName());
-                            if(result.getDevice().getName().toLowerCase().contains("ava_rasp")){
-                                beforeMacAddress = result.getDevice().getAddress();
-                                serviceUUIDList = new ArrayList<>();
-
-                                for(ParcelUuid item : result.getScanRecord().getServiceUuids()){
-                                    UUID servicUUID = item.getUuid();
-                                    if(!serviceUUIDList.contains(servicUUID)){
-                                        serviceUUIDList.add(servicUUID);
-                                    }
-                                }
-
-                                connectToDevice(result.getDevice());
-                            }
-                        }
-                    }
+                    compareServices(result);
                 }
             }else{
-                Log.i(TAG, "Scan Result : " + result.toString());
-                if(result.getDevice() != null){
-                    if(result.getDevice().getName()!= null){
-                        Log.d(TAG, "Device Name : " + result.getDevice().getName());
-                        if(result.getDevice().getName().toLowerCase().contains("ava_rasp")){
-                            beforeMacAddress = result.getDevice().getAddress();
-                            serviceUUIDList = new ArrayList<>();
-
-                            for(ParcelUuid item : result.getScanRecord().getServiceUuids()){
-                                UUID servicUUID = item.getUuid();
-                                if(!serviceUUIDList.contains(servicUUID)){
-                                    serviceUUIDList.add(servicUUID);
-                                }
-                            }
-
-                            connectToDevice(result.getDevice());
-                        }
-                    }
-                }
+                Log.d(TAG, "BLE Mac Address No Exist");
+                compareServices(result);
             }
         }
         @Override
@@ -178,6 +143,28 @@ public class AvaBleHandler {
             Log.e("Scan Failed", "Error Code: " + errorCode);
         }
     };
+
+    private void compareServices(ScanResult result){
+        if(result.getDevice() != null){
+            if(result.getDevice().getName()!= null){
+                Log.d(TAG, "Device Name : " + result.getDevice().getName());
+                Log.i(TAG, "Scan Result : " + result.toString());
+                if(result.getDevice().getName().toLowerCase().contains("ava")){
+                    beforeMacAddress = result.getDevice().getAddress();
+                    serviceUUIDList = new ArrayList<>();
+
+                    for(ParcelUuid item : result.getScanRecord().getServiceUuids()){
+                        UUID serviceUUID = item.getUuid();
+                        if(!serviceUUIDList.contains(serviceUUID)){
+                            serviceUUIDList.add(serviceUUID);
+                        }
+                    }
+
+                    connectToDevice(result.getDevice());
+                }
+            }
+        }
+    }
 
     /**
      * Gatt Call Back
@@ -212,10 +199,8 @@ public class AvaBleHandler {
             Log.d(TAG, "Service Size : " + nowService.getCharacteristics().size());
             authBGC = nowService.getCharacteristics().get(0);
             wifiBGC = nowService.getCharacteristics().get(1);
-            ledBGC = nowService.getCharacteristics().get(2);
-            radioBGC = nowService.getCharacteristics().get(3);
 
-            if(authBGC != null && wifiBGC !=null && ledBGC !=null && radioBGC!=null){
+            if(authBGC != null && wifiBGC !=null){
                 Log.d(TAG, "Ava Service Discovered...");
                 Log.d(TAG, "Stop Scanning");
                 AvaApp.saveMacAddress(activity, beforeMacAddress);
@@ -358,7 +343,7 @@ public class AvaBleHandler {
                     Thread.sleep(500);
                     count++;
                 }catch (InterruptedException e){
-                    Log.e(TAG, "Thread.Sleep Exception...");
+                     Log.e(TAG, "Thread.Sleep Exception...");
                     e.printStackTrace();
                 }
 
@@ -420,22 +405,6 @@ public class AvaBleHandler {
 
     public boolean writeWifi(String msg){
         BluetoothGattCharacteristic characteristic = wifiBGC;
-        if(msg != null){
-            characteristic.setValue(msg.getBytes());
-            characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
-            return mGatt.writeCharacteristic(characteristic);
-        }else{
-            return false;
-        }
-    }
-
-    public void getLedState(){
-        this.res = null;
-        mGatt.readCharacteristic(ledBGC);
-    }
-
-    public boolean writeLed(String msg){
-        BluetoothGattCharacteristic characteristic = ledBGC;
         if(msg != null){
             characteristic.setValue(msg.getBytes());
             characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);

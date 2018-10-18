@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,11 +18,18 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.hch.hooney.avaappproject.Alert.AvaJustAlert;
 import com.hch.hooney.avaappproject.Alert.myAlert;
 import com.hch.hooney.avaappproject.Application.AvaApp;
 import com.hch.hooney.avaappproject.BleHandler.AvaBleHandler;
 import com.hch.hooney.avaappproject.SupportTool.AvaDateTime;
+
+import java.util.List;
 
 public class AuthCodeActivity extends AppCompatActivity {
     private final String TAG = AuthCodeActivity.class.getSimpleName();
@@ -78,6 +86,10 @@ public class AuthCodeActivity extends AppCompatActivity {
         //Ble 초기 설정 확인
         AvaApp.initMethod(AuthCodeActivity.this);
 
+        if(AvaApp.fDatabase == null){
+            AvaApp.initFDatabase();
+        }
+
         typingText = (EditText) findViewById(R.id.init_bluth_edit);
         confirmBTN = (Button) findViewById(R.id.init_connect_button);
         confirmBTN.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +99,7 @@ public class AuthCodeActivity extends AppCompatActivity {
                     confirmBTN.setVisibility(View.GONE);
                     progressBar.setVisibility(View.VISIBLE);
                     typingText.setFocusable(false);
+
                     if(!checkAvaAuthKey()){
                         confirmBTN.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
@@ -104,6 +117,59 @@ public class AuthCodeActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.init_progress_bar);
 
         handler = initHandler();
+    }
+
+    private void callAuthSignalToAva(){
+        final String checkCode = typingText.getText().toString();
+
+        AvaApp.fDatabase.getReference()
+                .child("Certification")
+                .child("Device")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        boolean isExistKey = false;
+                        for(DataSnapshot item : dataSnapshot.getChildren()){
+                            if(item.getKey().toLowerCase().equals(checkCode)){
+                                isExistKey = true;
+                                break;
+                            }
+                        }
+
+                        if(isExistKey){
+                            AvaApp.fDatabase.getReference()
+                                    .child("Command")
+                                    .child(checkCode)
+                                    .child("Auth")
+                                    .setValue(true)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            startSearch();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            callAvaJustAlert("인증에 실패하였습니다.\n다시 시도해 주세요.");
+                                            confirmBTN.setVisibility(View.VISIBLE);
+                                            progressBar.setVisibility(View.GONE);
+                                            typingText.setFocusableInTouchMode(true);
+                                        }
+                                    });
+                        }else{
+                            callAvaJustAlert("존재하지 않는 인증키 입니다.");
+                            confirmBTN.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            typingText.setFocusableInTouchMode(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     private Handler initHandler(){
@@ -219,7 +285,7 @@ public class AuthCodeActivity extends AppCompatActivity {
             String typing = typingText.getText().toString();
             if(typing.length() > 0){
                 if(typing.toLowerCase().contains("ava-") && typing.length()>9){
-                    startSearch();
+                    callAuthSignalToAva();
                 }else{
                     callAvaJustAlert("잘못된 인증키 입니다.");
                     return false;

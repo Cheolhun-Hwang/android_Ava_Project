@@ -28,8 +28,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hch.hooney.avaappproject.Alert.AvaJustAlert;
@@ -40,12 +42,9 @@ import com.jaredrummler.android.colorpicker.ColorPickerView;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class LedActivity extends AppCompatActivity {
+public class LedActivity extends AppCompatActivity implements ValueEventListener {
     private final String TAG = "LedActivity";
     private final int REQUEST_ENABLE = 203;
-
-    private Thread getStateBLE, changeColorBLE;
-    private Handler handler;
 
     private EditText getTintColor;
     private Button complete;
@@ -56,6 +55,8 @@ public class LedActivity extends AppCompatActivity {
     private ColorPickerView colorPickerView;
     private ImageButton backBTN, saveThemeBTN, turnOffBTN;
     private ProgressBar progressBar;
+
+    private DatabaseReference AvaLED;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,17 +95,19 @@ public class LedActivity extends AppCompatActivity {
     }
 
     private void init() throws Exception {
-        //Ble 초기 설정 확인
-        AvaApp.initMethod(LedActivity.this);
-
         if(AvaApp.fDatabase == null){
             AvaApp.initFDatabase();
         }
 
+        AvaLED = AvaApp.fDatabase.getReference()
+                .child("Command")
+                .child(AvaApp.AvaCode).child("LED");
+
+        if(AvaLED == null){
+            callAvaLEDStateAlert("무드등 정보를 받을 수 없습니다.\n잠시 후 다시 시도해주세요.");
+        }
+
         ledNowState = "off";
-
-        handler = initHandler();
-
         getTintColor = (EditText) findViewById(R.id.led_color_text);
         complete = (Button) findViewById(R.id.led_complete);
         ledLight = (ImageView) findViewById(R.id.led_image);
@@ -115,52 +118,7 @@ public class LedActivity extends AppCompatActivity {
         saveThemeBTN = (ImageButton) findViewById(R.id.led_color_save);
         turnOffBTN = (ImageButton) findViewById(R.id.led_color_off);
         progressBar = (ProgressBar) findViewById(R.id.led_progress);
-
     }
-
-    private Handler initHandler(){
-        return new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                switch (msg.what){
-                    case 8001:
-                        //연결!
-                        if(progressBar.getVisibility() == View.VISIBLE){
-                            progressBar.setVisibility(View.GONE);
-                            ledLight.setVisibility(View.VISIBLE);
-                        }
-
-                        if(getStateBLE != null){
-                            String res = (String) msg.obj;
-                            String[] sp_res = res.split("&");
-                            setfilter(sp_res[1], false);
-                            releaseStateBLEThread();
-                        }else if(changeColorBLE != null){
-                            String res = (String) msg.obj;
-                            String[] sp_res = res.split("&");
-                            setfilter(sp_res[1], true);
-                            releaseChangeColorBLEThread();
-                            callAvaJustAlert("성공적으로 변경하였습니다.");
-                        }else{
-                            Log.e(TAG, "Led Thread Call back Error.");
-                            callAvaLEDStateAlert("무드등 기능에 문제를 발견하였습니다.\n잠시 후 다시 시도해주십시오.");
-                        }
-                        break;
-                    case 8002:
-                    case 8003:
-                        callAvaLEDStateAlert(msg.obj.toString());
-                        break;
-                    case 8004:
-                        Toast.makeText(getApplicationContext(),
-                                "무드등 상태를 읽을 수 없습니다.[3]",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return true;
-            }
-        });
-    }
-
     private void setEvent()throws Exception{
         backBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,15 +146,7 @@ public class LedActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     ledLight.setVisibility(View.GONE);
                 }
-
-                if(AvaApp.AvaBLEOrder){
-                    //bluth method
-                    changeColorBLE = initChangeColorBLEThread();
-                    changeColorBLE.start();
-                }else{
-                    //Firebase
-                    changeFirebaseColor(nowColor);
-                }
+                changeFirebaseColor(nowColor);
             }
         });
 
@@ -241,47 +191,13 @@ public class LedActivity extends AppCompatActivity {
     }
 
     private void checkUseMethod() {
-        if (AvaApp.AvaBLEOrder) {
-            //BLE 우선 통신
-            Log.d(TAG, "LED BLE State");
-            getStateBLE = initStateBLEThread();
-            getStateBLE.start();
-        } else {
-            //Net 차선 통신
-            Log.d(TAG, "LED Firebase State");
-            AvaApp.fDatabase.getReference().child("Command")
-                    .child(AvaApp.AvaCode).child("LED").child("State").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    HashMap<String, Object> map = (HashMap<String, Object>) dataSnapshot.getValue();
-
-                    nowColor = (String) map.get("color");
-                    ledNowState = (String) map.get("now");
-
-                    if(nowColor != null || ledNowState != null){
-                        progressBar.setVisibility(View.GONE);
-                        ledLight.setVisibility(View.VISIBLE);
-
-                        setfilter(nowColor, true);
-                    }else{
-                        progressBar.setVisibility(View.GONE);
-                        ledLight.setVisibility(View.VISIBLE);
-
-                        callAvaJustAlert("LED 정보를 받지 못했습니다. [5]");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
+        //Net 차선 통신
+        Log.d(TAG, "LED Firebase State");
+        AvaLED.child("State").addValueEventListener(this);
     }
 
     private void setUI() throws Exception{
         setColorSet();
-
         ledState.setText("현재 상태 : "+ledNowState );
     }
 
@@ -304,27 +220,30 @@ public class LedActivity extends AppCompatActivity {
             map.put("now", "on");
         }
 
-        AvaApp.fDatabase.getReference().child("Command")
-                .child(AvaApp.AvaCode).child("LED").child("Log").child(AvaDateTime.getNowDateTime())
+        AvaLED.child("Log").child(AvaDateTime.getNowDateTime())
                 .setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-//                AvaApp.fDatabase.getReference().child("Command")
-//                        .child(AvaApp.AvaCode).child("LED").child("State").setValue(map)
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                callAvaJustAlert("성공적으로 변경되었습니다.");
-//                                setfilter(nowColor, true);
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        callAvaJustAlert("Ava Led 정보를 받지 못했습니다.[2]");
-//                    }
-//                });
-                callAvaJustAlert("성공적으로 변경되었습니다.");
-                setfilter(nowColor, true);
+
+                //Personal Firebase Database
+                AvaApp.fDatabase.getReference().child("Command")
+                        .child(AvaApp.AvaCode).child("LED").child("State").setValue(map)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                callAvaJustAlert("성공적으로 변경되었습니다.");
+                                setfilter(nowColor);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callAvaJustAlert("Ava Led 정보를 받지 못했습니다.[2]");
+                    }
+                });
+
+                //Our's Firebase Database
+//                callAvaJustAlert("성공적으로 변경되었습니다.");
+//                setfilter(nowColor);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -373,7 +292,7 @@ public class LedActivity extends AppCompatActivity {
 
                         try{
                             AvaApp.UserColorSet.put(themeName, nowColor);
-                            setfilter(nowColor, true);
+                            setfilter(nowColor);
                         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -405,13 +324,7 @@ public class LedActivity extends AppCompatActivity {
 
     private void PowerOff(){
         nowColor = "#000000";
-        if(AvaApp.AvaBLEOrder){
-            changeColorBLE = initChangeColorBLEThread();
-            changeColorBLE.start();
-        }else{
-            changeFirebaseColor(nowColor);
-        }
-
+        changeFirebaseColor(nowColor);
     }
 
     @Override
@@ -419,114 +332,46 @@ public class LedActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_ENABLE){
             if(resultCode == RESULT_OK){
-                releaseStateBLEThread();
                 checkUseMethod();
             }
         }
     }
 
-    private Thread initStateBLEThread(){
-        return new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = handler.obtainMessage();
-                int count = 0;
-                if(AvaApp.AvaBle.callBleSearch()) {
-                    AvaApp.AvaBle.getLedState();
-
-                    while (true) {
-                        try {
-                            Thread.sleep(300);
-                            count++;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                            msg.what = 8003;
-                            msg.obj = "무드등 상태를 읽을 수 없습니다.[2]";
-                        }
-                        String res = AvaApp.AvaBle.getRes();
-                        if (res != null) {
-                            msg.what = 8001;
-                            msg.obj = res;
-                            Log.d(TAG, "LED : " + msg.obj.toString());
-                            break;
-                        }
-
-                        if (count > 100) {
-                            msg.what = 8002;
-                            msg.obj = "무드등 상태를 읽을 수 없습니다.[1]";
-                            break;
-                        }
-                    }
-                }
-                handler.sendMessage(msg);
-            }
-        });
-    }
-
-    private void releaseStateBLEThread(){
-        if(getStateBLE!= null){
-            if(getStateBLE.isAlive()){
-                getStateBLE.interrupt();
-            }
-            getStateBLE = null;
+    private void setfilter(String color){
+        if(color.equals("#000000") ){
+            ledNowState = "Off";
+        }else{
+            ledNowState = "On";
         }
-    }
-
-    private Thread initChangeColorBLEThread(){
-        return new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //이미 연결되었다는 전제가 되어있음.
-                Message msg = handler.obtainMessage();
-                AvaApp.AvaBle.setRes(null);
-                Log.d(TAG, "Change BLE Thread Start...");
-                Log.d(TAG, "Change Color : " + nowColor.toString());
-                if(AvaApp.AvaBle.writeLed(nowColor.toString())){
-                    while (true){
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        if(AvaApp.AvaBle.getRes() != null){
-                            msg.what = 8001;
-                            msg.obj = AvaApp.AvaBle.getRes();
-                            Log.d(TAG, "LED : " + msg.obj.toString());
-                            break;
-                        }
-                    }
-
-                }else{
-                    msg.what = 8004;
-                }
-                handler.sendMessage(msg);
-            }
-        });
-    }
-
-    private void releaseChangeColorBLEThread(){
-        if(changeColorBLE != null){
-            if(changeColorBLE.isAlive()){
-                changeColorBLE.interrupt();
-            }
-            changeColorBLE = null;
-        }
-    }
-
-    private void setfilter(String color, boolean isNet){
-        if(isNet){
-            if(color.equals("#000000") ){
-                ledNowState = "Off";
-            }else{
-                ledNowState = "On";
-            }
-        }
-
         getTintColor.setText(color.replace("#", ""));
         colorPickerView.setColor(Color.parseColor(color));
         ledLight.setColorFilter(Color.parseColor(color));
         ledState.setText("현재 상태 : " + ledNowState);
+    }
+
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        HashMap<String, Object> map = (HashMap<String, Object>) dataSnapshot.getValue();
+
+        nowColor = (String) map.get("color");
+        ledNowState = (String) map.get("now");
+
+        if(nowColor != null || ledNowState != null){
+            progressBar.setVisibility(View.GONE);
+            ledLight.setVisibility(View.VISIBLE);
+
+            setfilter(nowColor);
+        }else{
+            progressBar.setVisibility(View.GONE);
+            ledLight.setVisibility(View.VISIBLE);
+
+            callAvaJustAlert("LED 정보를 받지 못했습니다. [5]");
+        }
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+
     }
 
     private class ColorSetListLinear extends LinearLayout{
@@ -566,7 +411,7 @@ public class LedActivity extends AppCompatActivity {
             colorButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setfilter(SaveColorHax, false);
+                    setfilter(SaveColorHax);
                 }
             });
             colorButton.setOnLongClickListener(new OnLongClickListener() {

@@ -1,8 +1,12 @@
 package com.hch.hooney.avaappproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -17,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.hch.hooney.avaappproject.Alert.AvaJustAlert;
 import com.hch.hooney.avaappproject.Application.AvaApp;
 
@@ -48,7 +54,7 @@ public class WifiActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        callGetWifiState();
+        callFirebaseBLEOn();
     }
 
     @Override
@@ -71,6 +77,10 @@ public class WifiActivity extends AppCompatActivity {
     private void init(){
         //Ble 초기 설정 확인
         AvaApp.initMethod(WifiActivity.this);
+
+        if(AvaApp.fDatabase == null){
+            AvaApp.initFDatabase();
+        }
 
         connectType = false;
         init_process = getIntent().getBooleanExtra("init_process", false);
@@ -146,6 +156,37 @@ public class WifiActivity extends AppCompatActivity {
         });
     }
 
+    private void callFirebaseBLEOn(){
+        AvaApp.fDatabase.getReference().child("Command").child(AvaApp.AvaCode)
+                .child("Auth").setValue(true)
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                callGetWifiState();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(WifiActivity.this);
+                alert.setTitle("Ava Wifi 연결");
+                alert.setMessage("Ava 블루투스 연결에 실패하였습니다.\n잠시 후 다시 시도해주세요.");
+                alert.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                alert.show();
+            }
+        });
+    }
+
+    private void callFirebaseBLEOff(){
+        AvaApp.fDatabase.getReference().child("Command").child(AvaApp.AvaCode)
+                .child("Auth").setValue(false);
+    }
+
     private Handler initHandler(){
         return new Handler(new Handler.Callback() {
             @Override
@@ -177,6 +218,7 @@ public class WifiActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         connectionThread.interrupt();
                         connectionThread = null;
+                        saidFail(msg.obj.toString(), false);
                         break;
                     case 201:
                         //연결 완료
@@ -193,7 +235,8 @@ public class WifiActivity extends AppCompatActivity {
                     case 204:
                     case 205:
                         //연결 실패
-                        saidFail(msg.obj.toString());
+                        saidFail(msg.obj.toString(), true);
+                        AvaApp.AvaBle.scanLeDevice(false);
                         break;
                 }
                 return true;
@@ -212,7 +255,7 @@ public class WifiActivity extends AppCompatActivity {
                     int count = 0;
                     while (true){
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(3000);
                             count++;
                             Log.d(TAG, "Progress : " + count+" sec...");
                         } catch (InterruptedException e) {
@@ -227,15 +270,15 @@ public class WifiActivity extends AppCompatActivity {
                             break;
                         }
 
-                        if(count > 10){
+                        if(count > 60){
                             msg.what = 103;
-                            msg.obj = "검색 시간이 초과되었습니다.";
+                            msg.obj = "[인증실패]\n검색 시간이 초과되었습니다.\n일부 스마트폰의 경우 위치 기능이 필요합니다.";
                             break;
                         }
                     }
                 }else{
                     msg.what = 102;
-                    msg.obj = "AvA 장치를 찾을 수 없습니다.";
+                    msg.obj = "[인증실패]\nAvA 장치를 찾을 수 없습니다.\n일부 스마트폰의 경우 위치 기능이 필요합니다.";
                 }
                 handler.sendMessage(msg);
             }
@@ -308,27 +351,44 @@ public class WifiActivity extends AppCompatActivity {
         connectionThread.start();
     }
 
-    private void saidFail(String msg){
-        callAvaJustAlert(msg);
+    private void saidFail(String msg, boolean type){
+        callAvaJustAlert(msg, type);
         directWifiSelect.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
 
-    private void callAvaJustAlert(String msg){
+    private void callAvaJustAlert(String msg, boolean type){
         AvaJustAlert alert = new AvaJustAlert(WifiActivity.this);
         alert.setTitle("Ava 와이파이 연결");
         alert.setMessage(msg);
-        alert.setPositiveButton("확인");
+        if(type){
+            alert.setPositiveButton("확인");
+        }else{
+            alert.setPositiveButton("위치 기능 켜기", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                }
+            }).setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        }
+
         alert.show();
     }
 
     private void intentMain(){
+        callFirebaseBLEOff();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 
     private void intentSettings(){
+        callFirebaseBLEOff();
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }

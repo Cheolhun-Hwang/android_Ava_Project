@@ -43,10 +43,13 @@
                     android:focusableInTouchMode="true"
                     android:background="@drawable/background_round_white_noshadow"
                     android:orientation="vertical"
-                    android:layout_margin="6.5sp"
+                    android:layout_marginTop="6.5sp"
+                    android:layout_marginBottom="6.5sp"
+                    android:layout_marginLeft="13sp"
+                    android:layout_marginRight="13sp"
                     android:padding="10.5sp"
                     android:minWidth="275sp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
                         android:layout_marginTop="5.5sp"

@@ -347,6 +347,8 @@ public class LedActivity extends AppCompatActivity implements ValueEventListener
         colorPickerView.setColor(Color.parseColor(color));
         ledLight.setColorFilter(Color.parseColor(color));
         ledState.setText("현재 상태 : " + ledNowState);
+        ledLight.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

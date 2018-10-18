@@ -2,11 +2,13 @@ package com.hch.hooney.avaappproject;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,8 +27,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class MicActivity extends AppCompatActivity implements RecognitionListener {
+public class MicActivity extends AppCompatActivity implements RecognitionListener, TextToSpeech.OnInitListener {
     private final String TAG = MicActivity.class.getSimpleName();
     private final String DIALOGFLOW_URL = "https://api.dialogflow.com/v1/query?v=20150910";
 
@@ -39,6 +42,9 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
     private Intent recordingIntent;
     private Thread orderThread;
     private Handler handler;
+
+    private String ttsTarget;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +83,15 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
         notifyText = (TextView) findViewById(R.id.mic_notify_question_text);
 
         handler = initHandler();
-
+        ttsTarget = "";
         recordingIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recordingIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
         recordingIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
 
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
         mRecognizer.setRecognitionListener(this);
+
+        tts = new TextToSpeech(MicActivity.this, MicActivity.this);
     }
 
     private Thread initOrderThread(){
@@ -159,6 +167,7 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
                         break;
                     case 107:
                         completeUI();
+                        Log.d(TAG, "TTS : " +AvaApp.isUsingTTS);
 
                         if(msg.obj.toString().contains("tmin") || msg.obj.toString().contains("tmax")){
                             String[] split = msg.obj.toString()
@@ -166,14 +175,17 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
                                     .split(",");
                             String[] name = split[0].split(":");
                             String[] tc = split[1].split(":");
-
-                            callJustNotify("Ava 의 답변", "기온은 "+tc[1]+"℃ 이며, "+
-                                                name[1] + " 입니다.");
+                            ttsTarget = "기온은 "+tc[1]+"℃ 이며, "+ name[1] + " 입니다.";
                         }else{
-                            callJustNotify("Ava 의 답변", msg.obj.toString());
+                            ttsTarget = msg.obj.toString();
                         }
 
-
+                        if(AvaApp.isUsingTTS){
+                            saidTTS();
+                            callJustNotify("Ava 의 답변", ttsTarget);
+                        }else{
+                            callJustNotify("Ava 의 답변", ttsTarget);
+                        }
                         break;
                 }
                 return true;
@@ -219,35 +231,42 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
             }
         });
 
+        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finishAddEvent();
+            }
+        });
+
         alert.show();
     }
-
+    //Mic
     @Override
     public void onReadyForSpeech(Bundle params) {
         Toast.makeText(getApplicationContext(), "AvA 가 당신의 명령을 기다리고 있어요!",
                 Toast.LENGTH_SHORT).show();
     }
-
+    //Mic
     @Override
     public void onBeginningOfSpeech() {
 
     }
-
+    //Mic
     @Override
     public void onRmsChanged(float rms) {
 
     }
-
+    //Mic
     @Override
     public void onBufferReceived(byte[] buffer) {
 
     }
-
+    //Mic
     @Override
     public void onEndOfSpeech() {
         progressUI();
     }
-
+    //Mic
     @Override
     public void onError(int error) {
         Toast.makeText(getApplicationContext(), "AvA 가 당신의 명령을 이해하지 못했어요.",
@@ -255,7 +274,7 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
 
         finishAddEvent();
     }
-
+    //Mic
     @Override
     public void onResults(Bundle results) {
         String key = "";
@@ -276,14 +295,38 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
         orderThread = initOrderThread();
         orderThread.start();
     }
-
+    //Mic
     @Override
     public void onPartialResults(Bundle partialResults) {
 
     }
-
+    //Mic
     @Override
     public void onEvent(int eventType, Bundle params) {
 
     }
+
+    private void saidTTS(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(ttsTarget,TextToSpeech.QUEUE_FLUSH,null,null);
+        } else {
+            tts.speak(ttsTarget, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+    //TTS
+    @Override
+    public void onInit(int status) {
+        if(status == TextToSpeech.SUCCESS){
+            int korea = tts.setLanguage(Locale.KOREA);
+            if(korea == TextToSpeech.LANG_MISSING_DATA || korea == TextToSpeech.LANG_NOT_SUPPORTED){
+                Toast.makeText(getApplicationContext(), "TTS 기능을 지원하지 않습니다.", Toast.LENGTH_SHORT).show();
+                AvaApp.saveAvaUsingTTS(MicActivity.this, false);
+                AvaApp.isUsingTTS = AvaApp.isAvaUsingTTS(MicActivity.this);
+            }else{
+                tts.setPitch(1.0f);
+                tts.setSpeechRate(0.9f);
+            }
+        }
+    }
+
 }

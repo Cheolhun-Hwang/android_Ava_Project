@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     private final String TAG = SettingsActivity.class.getSimpleName();
     private final int INIT_PROCESS_SIG = 711;
 
-    private TextView versionNotify, nickNameNotify, wifiSsidNotify;
+    private TextView versionNotify, nickNameNotify, wifiSsidNotify, userCodeNitify, avaCodeNotify;
     private Button initBTN;
     private SwitchCompat orderBleSwitch;
     private ProgressBar progressBar;
@@ -66,6 +67,10 @@ public class SettingsActivity extends AppCompatActivity {
         versionNotify = (TextView) findViewById(R.id.setting_version);
         nickNameNotify = (TextView) findViewById(R.id.setting_nick_notify_text);
         wifiSsidNotify = (TextView) findViewById(R.id.setting_now_ava_ssid);
+        userCodeNitify = (TextView) findViewById(R.id.setting_nick_notify_user_code);
+        userCodeNitify.setText(AvaApp.AvaUserCode);
+        avaCodeNotify = (TextView) findViewById(R.id.setting_nick_notify_ava_code);
+        avaCodeNotify.setText(AvaApp.AvaCode);
         orderBleSwitch = (SwitchCompat) findViewById(R.id.setting_useBlueth);
         progressBar = (ProgressBar) findViewById(R.id.setting_init_progress);
 
@@ -105,8 +110,16 @@ public class SettingsActivity extends AppCompatActivity {
         orderBleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                AvaApp.saveAvaBLEOrder(SettingsActivity.this, isChecked);
-                AvaApp.AvaBLEOrder = AvaApp.isAvaBLEOrder(SettingsActivity.this);
+
+                if(isChecked){
+                    Intent chkIntent = new Intent();
+                    chkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+                    startActivityForResult(chkIntent, 8008);
+                }else{
+                    AvaApp.saveAvaUsingTTS(SettingsActivity.this, false);
+                    AvaApp.isUsingTTS = AvaApp.isAvaUsingTTS(SettingsActivity.this);
+                }
+
             }
         });
     }
@@ -129,8 +142,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void showOrderBLE(){
-        Log.d(TAG, "BLE Order: " + AvaApp.AvaBLEOrder);
-        orderBleSwitch.setChecked(AvaApp.AvaBLEOrder);
+        Log.d(TAG, "BLE Order: " + AvaApp.isUsingTTS);
+        orderBleSwitch.setChecked(AvaApp.isUsingTTS);
     }
 
     private void showWifiSSID(){
@@ -215,7 +228,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void clearSharedPre(){
-        AvaApp.saveAvaBLEOrder(SettingsActivity.this, true);
+        AvaApp.saveAvaUsingTTS(SettingsActivity.this, true);
         AvaApp.saveAvaRecentLocation(SettingsActivity.this, 0.0f, 0.0f);
         AvaApp.saveAvaUserCode(SettingsActivity.this, null);
         AvaApp.saveAvaRecentUserNickName(SettingsActivity.this, null);
@@ -309,5 +322,30 @@ public class SettingsActivity extends AppCompatActivity {
         setResult(sig);
         finish();
         overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_top);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 8008){
+            switch (resultCode){
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_PASS:
+                    //    Log.d(TAG, "Case : CHECK_VOICE_DATA_PASS");
+                    AvaApp.saveAvaUsingTTS(SettingsActivity.this, true);
+                    AvaApp.isUsingTTS = AvaApp.isAvaUsingTTS(SettingsActivity.this);
+                    break;
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_BAD_DATA:
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_MISSING_DATA:
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_MISSING_VOLUME:
+                    // Log.d(TAG, "Case : 언어 요소 필요 > " + resultCode);
+                    Intent installIntent = new Intent();
+                    installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                    startActivity(installIntent);
+                    break;
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_FAIL:
+                default:
+                    // Log.e(TAG, "None Exist TTS");
+            }
+        }
     }
 }

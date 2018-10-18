@@ -25,7 +25,7 @@ public class LoadingActivity extends AppCompatActivity {
                 AvaApp.AvaUserCode = AvaApp.getAvaUserCode(LoadingActivity.this);
                 AvaApp.AvaUserNickName = AvaApp.getAvaRecentUserNickName(LoadingActivity.this);
                 AvaApp.getAvaRecentLocation(LoadingActivity.this);
-                AvaApp.isAvaBLEOrder(LoadingActivity.this);
+                AvaApp.isAvaUsingTTS(LoadingActivity.this);
                 AvaApp.getUserColorSet(LoadingActivity.this);
 
                 startActivity(new Intent(getApplicationContext(), PermissionActivity.class));

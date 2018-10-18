@@ -1,6 +1,7 @@
 package com.hch.hooney.avaappproject.BleHandler;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -16,6 +17,7 @@ import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -38,7 +40,7 @@ import java.util.UUID;
 public class AvaBleHandler {
     private final String TAG = AvaBleHandler.class.getSimpleName();
     public final int REQUEST_ENABLE = 103;
-    private final long SCAN_PERIOD = 30000;
+    private final long SCAN_PERIOD = 1000 * 60 * 5; //5 min...
 
     //Private Variable
     private Handler mHandler;
@@ -296,7 +298,7 @@ public class AvaBleHandler {
         return true;
     }
 
-    private void scanLeDevice(final boolean enable) {
+    public void scanLeDevice(final boolean enable) {
         if (enable) {
             mHandler.postDelayed(new Runnable() {
                 @Override

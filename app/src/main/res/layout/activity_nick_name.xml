@@ -38,56 +38,63 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13sp"
+                    android:layout_marginTop="6.5sp"
+                    android:layout_marginRight="13sp"
+                    android:layout_marginBottom="6.5sp"
+                    android:background="@drawable/background_round_white_noshadow"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:background="@drawable/background_round_white_noshadow"
-                    android:orientation="vertical"
-                    android:layout_margin="6.5sp"
-                    android:padding="10.5sp"
                     android:minWidth="275sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical"
+                    android:padding="10.5sp">
+
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="9.5sp"
                         android:layout_marginBottom="6sp"
                         android:padding="3.5sp"
-                        android:text="# AvA 가 당신을 알 수 있도록 \n \'이름\'을 알려주세요!"
+                        android:text="# AvA 가 당신을 알 수 있도록 \'이름\'을 알려주세요!"
                         android:textColor="@color/black"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                     <android.support.design.widget.TextInputLayout
-                        android:layout_marginRight="2.5sp"
-                        android:layout_marginLeft="2.5sp"
-                        android:textColorHint="@color/grey_600"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2.5sp"
+                        android:layout_marginRight="2.5sp"
+                        android:textColorHint="@color/grey_600">
+
                         <EditText
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:lines="1"
                             android:id="@+id/nick_name_edittext"
-                            android:nextFocusDown="@id/wifi_direct_psk_edittext"
-                            android:backgroundTint="@color/main_green"
-                            android:textColorHint="@color/grey_600"
-                            android:textSize="10.5sp"
-                            android:textColor="@color/black"
-                            android:hint="* 당신의 이름, 별명 등 다양하게 작성해주세요."
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/main_green"
+                            android:hint="* 당신의 이름, 별명 등 다양하게 작성해주세요."
+                            android:inputType="text"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:nextFocusDown="@id/wifi_direct_psk_edittext"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey_600"
+                            android:textSize="13.5sp" />
                     </android.support.design.widget.TextInputLayout>
+
                     <Button
                         android:id="@+id/nick_name_confirm_btn"
-                        android:layout_marginTop="5.5sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="13.5sp"
+                        android:layout_marginTop="5.5sp"
+                        android:backgroundTint="@color/main_green"
                         android:text="설정 완료"
                         android:textColor="@color/white"
-                        android:backgroundTint="@color/main_green"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="13.5sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 

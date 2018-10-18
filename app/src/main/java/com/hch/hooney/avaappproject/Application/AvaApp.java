@@ -19,12 +19,11 @@ public class AvaApp extends Application {
     /**
      * App 공유 변수들
      */
-    public static boolean AvaBLEOrder;
+    public static boolean isUsingTTS;
     public static AvaBleHandler AvaBle;
     public static FirebaseDatabase fDatabase;
 
     public static String AvaCode;
-    public static String AvaWifiSSID;
     public static String AvaUserCode;
     public static String AvaUserNickName;
     public static float AvaLat;
@@ -49,15 +48,15 @@ public class AvaApp extends Application {
 
     }
 
-    public static boolean isAvaBLEOrder(Activity activity){
+    public static boolean isAvaUsingTTS(Activity activity){
         SharedPreferences pref = activity.getSharedPreferences("pref", MODE_PRIVATE);
-        return pref.getBoolean("ava_ble_order", true);
+        return pref.getBoolean("ava_use_tts", true);
     }
 
-    public static void saveAvaBLEOrder(Activity activity, boolean flag){
+    public static void saveAvaUsingTTS(Activity activity, boolean flag){
         SharedPreferences pref = activity.getSharedPreferences("pref", MODE_PRIVATE);
         SharedPreferences.Editor editor =  pref.edit();
-        editor.putBoolean("ava_ble_order", flag);
+        editor.putBoolean("ava_use_tts", flag);
         editor.commit();
     }
 

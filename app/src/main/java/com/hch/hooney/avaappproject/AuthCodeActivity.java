@@ -1,12 +1,14 @@
 package com.hch.hooney.avaappproject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -109,7 +111,7 @@ public class AuthCodeActivity extends AppCompatActivity {
                     if(equalKeys()){
                         intentWifi();
                     }else{
-                        saidFail("인증키가 다릅니다.");
+                        saidFail("인증키가 다릅니다.", true);
                     }
                 }
             }
@@ -151,14 +153,14 @@ public class AuthCodeActivity extends AppCompatActivity {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            callAvaJustAlert("인증에 실패하였습니다.\n다시 시도해 주세요.");
+                                            callAvaJustAlert("인증에 실패하였습니다.\n다시 시도해 주세요.", true);
                                             confirmBTN.setVisibility(View.VISIBLE);
                                             progressBar.setVisibility(View.GONE);
                                             typingText.setFocusableInTouchMode(true);
                                         }
                                     });
                         }else{
-                            callAvaJustAlert("존재하지 않는 인증키 입니다.");
+                            callAvaJustAlert("존재하지 않는 인증키 입니다.", true);
                             confirmBTN.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
                             typingText.setFocusableInTouchMode(true);
@@ -185,9 +187,13 @@ public class AuthCodeActivity extends AppCompatActivity {
                         break;
                     case 102 :
                     case 103 :
+                        saidFail(msg.obj.toString(), false);
+                        AvaApp.AvaBle.scanLeDevice(false);
+                        break;
                     case 104 :
                         //검색 실패.
-                        saidFail(msg.obj.toString());
+                        saidFail(msg.obj.toString(), true);
+                        AvaApp.AvaBle.scanLeDevice(false);
                         break;
                 }
                 return true;
@@ -195,8 +201,8 @@ public class AuthCodeActivity extends AppCompatActivity {
         });
     }
 
-    private void saidFail(String msg){
-        callAvaJustAlert(msg);
+    private void saidFail(String msg, boolean type){
+        callAvaJustAlert(msg, type);
         confirmBTN.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         typingText.setFocusableInTouchMode(true);
@@ -234,7 +240,7 @@ public class AuthCodeActivity extends AppCompatActivity {
                     int count = 0;
                     while (true){
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(3000);
                             count++;
                             Log.d(TAG, "Progress : " + count+" sec...");
                         } catch (InterruptedException e) {
@@ -249,21 +255,21 @@ public class AuthCodeActivity extends AppCompatActivity {
                                 msg.what = 101;
                             }else{
                                 Log.d(TAG, "RES : " + AvaApp.AvaBle.getRes());
-                                msg.obj = "인증키가 다릅니다.";
+                                msg.obj = "[인증실패]\n인증키가 다릅니다.";
                                 msg.what = 104;
                             }
                             break;
                         }
 
-                        if(count > 30){
+                        if(count > 60){
                             msg.what = 103;
-                            msg.obj = "검색 시간이 초과되었습니다.";
+                            msg.obj = "[인증실패]\n검색 시간이 초과되었습니다.\n일부 스마트폰의 경우 위치 기능이 필요합니다.";
                             break;
                         }
                     }
                 }else{
                     msg.what = 102;
-                    msg.obj = "AvA 장치를 찾을 수 없습니다.";
+                    msg.obj = "[인증실패]\nAvA 장치를 찾을 수 없습니다.\n일부 스마트폰의 경우 위치 기능이 필요합니다.";
                 }
 
                 handler.sendMessage(msg);
@@ -287,11 +293,11 @@ public class AuthCodeActivity extends AppCompatActivity {
                 if(typing.toLowerCase().contains("ava-") && typing.length()>9){
                     callAuthSignalToAva();
                 }else{
-                    callAvaJustAlert("잘못된 인증키 입니다.");
+                    callAvaJustAlert("잘못된 인증키 입니다.", true);
                     return false;
                 }
             }else{
-                callAvaJustAlert("AvA 장치의 인증키를 입력해주세요.");
+                callAvaJustAlert("AvA 장치의 인증키를 입력해주세요.", true);
                 return false;
             }
             return true;
@@ -314,11 +320,25 @@ public class AuthCodeActivity extends AppCompatActivity {
         startSearchThread.start();
     }
 
-    private void callAvaJustAlert(String msg){
+    private void callAvaJustAlert(String msg, boolean type){
         AvaJustAlert alert = new AvaJustAlert(AuthCodeActivity.this);
         alert.setTitle("AvA 인증");
         alert.setMessage(msg);
-        alert.setPositiveButton("확인");
+        if(type){
+            alert.setPositiveButton("확인");
+        }else{
+            alert.setPositiveButton("위치 기능 켜기", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                }
+            }).setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        }
         alert.show();
     }
 

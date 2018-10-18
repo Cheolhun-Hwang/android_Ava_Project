@@ -66,12 +66,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
+
+
+        //첫 실행시 한번만 받을거임.
+        getNowWeather();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+    }
 
+    private void getNowWeather(){
         //날씨 정보 확인;
         if (AvaApp.AvaLat == 0.0f || AvaApp.AvaLon == 0.0f) {
             Log.d(TAG, "Ava Location Error. 0.0f");
@@ -353,14 +359,14 @@ public class MainActivity extends AppCompatActivity {
                     getWeather = initGetWeather();
                     getWeather.start();
                 }else{
-                    callAvaJustAlert("위치 정보를 가져오지 못했습니다.\n다시 시도해주세요. [2]");
+                    callAvaJustAlert("위치 정보를 가져오지 못했습니다.\n잠시 후 다시 시도해주세요. [2]");
                 }
             } else {
                 weather_progress.setVisibility(View.GONE);
                 weather_lcoation_set_ibtn.setVisibility(View.VISIBLE);
                 weather_simply_iconic_text_and_notify_location.setVisibility(View.VISIBLE);
                 weather_area_and_notify_btn.setVisibility(View.VISIBLE);
-                callAvaJustAlert("위치 정보를 가져오지 못했습니다.\n다시 시도해주세요. [1]");
+                callAvaJustAlert("위치 정보를 가져오지 못했습니다.\n잠시 후 다시 시도해주세요. [1]");
             }
 
         } else {
@@ -401,6 +407,9 @@ public class MainActivity extends AppCompatActivity {
             case SETTING_CALLBACK:
                 if(resultCode == 711){
                     //초기화 코드
+                    startActivity(new Intent(getApplicationContext(), AuthCodeActivity.class));
+                    finish();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
                 break;
         }
@@ -408,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class AvaGetGPS implements LocationListener {
         private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; //10미터 당
-        private static final long MIN_TIME_UPDATES = 1000 * 60 * 1; // 1분마다
+        private static final long MIN_TIME_UPDATES = 1000 * 10 * 1; // 10 sec 마다
 
         private LocationManager manager;
 

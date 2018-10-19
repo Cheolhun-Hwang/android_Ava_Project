@@ -280,7 +280,7 @@ public class AuthCodeActivity extends AppCompatActivity {
     private boolean equalKeys(){
         if(AvaApp.AvaBle.getRes().toLowerCase().equals(
                 typingText.getText().toString().toLowerCase())) {
-            AvaApp.AvaCode = AvaApp.AvaBle.getRes();
+            AvaApp.AvaCode = AvaApp.AvaBle.getRes().toUpperCase();
             return true;
         }else{
             return false;

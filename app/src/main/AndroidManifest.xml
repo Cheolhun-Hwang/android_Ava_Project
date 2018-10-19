@@ -59,7 +59,9 @@
             android:name=".MelonChartActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".RadioActivity"></activity>
+        <activity android:name=".RadioActivity" />
+        <activity android:name=".RemoteActivity" />
+        <activity android:name=".AddRemoteDeviceActivity"></activity>
     </application>
 
 </manifest>

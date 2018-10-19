@@ -42,6 +42,11 @@ public class NickNameActivity extends AppCompatActivity {
         init();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void init(){
         //App Firebase init
         AvaApp.initFDatabase();

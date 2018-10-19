@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +20,7 @@ import com.hch.hooney.avaappproject.Application.AvaApp;
 import com.hch.hooney.avaappproject.ListPack.RadioChannel.RadioChannelAdapter;
 import com.hch.hooney.avaappproject.ListPack.RadioChannel.RadioChannelDAO;
 import com.hch.hooney.avaappproject.SupportTool.AvaDateTime;
+import com.joooonho.SelectableRoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -34,7 +34,7 @@ public class RadioActivity extends AppCompatActivity {
 
     private TextView nowRadioTitle;
     private ImageButton nowStartAndStop, backBTN;
-    private ImageView nowRadioImage;
+    private com.joooonho.SelectableRoundedImageView nowRadioImage;
     private DiscreteScrollView channelListView;
     private ProgressBar radioProgress;
 
@@ -50,6 +50,11 @@ public class RadioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_radio);
 
         init();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAddEvent();
     }
 
     @Override
@@ -69,7 +74,7 @@ public class RadioActivity extends AppCompatActivity {
         isNowOn = false;
         nowStartAndStop = (ImageButton) findViewById(R.id.radio_channel_stop_and_start);
         radioProgress = (ProgressBar) findViewById(R.id.radio_channel_progress);
-        nowRadioImage = (ImageView) findViewById(R.id.radio_channel_main_image);
+        nowRadioImage = (com.joooonho.SelectableRoundedImageView) findViewById(R.id.radio_channel_main_image);
         nowRadioTitle = (TextView) findViewById(R.id.radio_channel_main_title);
         channelListView = (DiscreteScrollView) findViewById(R.id.radio_channel_list_view);
         channelListView.setItemTransformer(new ScaleTransformer.Builder().setMinScale(0.9f).build());
@@ -106,7 +111,7 @@ public class RadioActivity extends AppCompatActivity {
 
     private void finishAddEvent(){
         finish();
-        overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_top);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     private void getRadioList(){

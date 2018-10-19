@@ -22,6 +22,7 @@ public class AvaWebViewActivity extends AppCompatActivity {
     private WebView mainView;
     private WebSettings webSettings;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

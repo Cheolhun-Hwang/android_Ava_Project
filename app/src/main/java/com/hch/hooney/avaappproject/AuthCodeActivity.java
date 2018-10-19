@@ -43,6 +43,11 @@ public class AuthCodeActivity extends AppCompatActivity {
     private Handler handler;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_code);

@@ -48,6 +48,11 @@ public class MelonChartActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        finishAddEvent();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
     }

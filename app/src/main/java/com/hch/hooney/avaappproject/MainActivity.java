@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), LedActivity.class));
-                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
 
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RadioActivity.class));
-                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
 
@@ -299,7 +299,8 @@ public class MainActivity extends AppCompatActivity {
         tab5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getApplicationContext(), RemoteActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
 
@@ -308,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), SETTING_CALLBACK);
-                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
 

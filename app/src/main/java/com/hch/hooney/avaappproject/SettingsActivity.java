@@ -49,7 +49,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finishForResultAddEvent(Activity.RESULT_CANCELED);
-        super.onBackPressed();
     }
 
     @Override
@@ -323,7 +322,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void finishForResultAddEvent(int sig){
         setResult(sig);
         finish();
-        overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_top);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     @Override

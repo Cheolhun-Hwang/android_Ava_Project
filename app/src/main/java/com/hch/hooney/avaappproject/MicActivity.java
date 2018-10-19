@@ -94,6 +94,11 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
         tts = new TextToSpeech(MicActivity.this, MicActivity.this);
     }
 
+    @Override
+    public void onBackPressed() {
+        finishAddEvent();
+    }
+
     private Thread initOrderThread(){
         return new Thread(new Runnable() {
             @Override

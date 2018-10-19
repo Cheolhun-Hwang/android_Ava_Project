@@ -75,6 +75,11 @@ public class LedActivity extends AppCompatActivity implements ValueEventListener
     }
 
     @Override
+    public void onBackPressed() {
+        finishAddEvent();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         try {
@@ -91,7 +96,7 @@ public class LedActivity extends AppCompatActivity implements ValueEventListener
 
     private void finishAddEvent(){
         finish();
-        overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_top);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
     private void init() throws Exception {

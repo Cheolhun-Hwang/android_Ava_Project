@@ -5,79 +5,95 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/grey_400"
+    android:background="@color/black"
     tools:context=".RadioActivity">
-    <RelativeLayout
-        android:backgroundTint="@color/green_player"
-        android:background="@drawable/actionbar_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="68sp">
-
-
-        <ImageView
-            android:layout_width="26sp"
-            android:layout_height="26sp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="55dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/radio" />
-
-        <TextView
-            android:layout_marginLeft="85sp"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:textSize="21.5sp"
-            android:textColor="@color/white"
-            android:text="라디오"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageButton
-            android:id="@+id/radio_back_btn"
-            android:tint="@color/white"
-            android:src="@drawable/ic_arrow_back_maincolor"
-            android:background="@color/alpha"
-            android:layout_marginLeft="15sp"
-            android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:layout_width="36sp"
-            android:layout_height="36sp" />
-
-        <ImageButton
-            android:tint="@color/white"
-            android:id="@+id/radio_channel_stop_and_start"
-            android:layout_marginRight="15sp"
-            android:layout_alignParentRight="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_pause_circle_outline_black"
-            android:background="@color/alpha"
-            android:layout_centerVertical="true"
-            android:layout_width="48sp"
-            android:layout_height="48sp" />
-    </RelativeLayout>
-
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:background="@color/white"
-            android:layout_weight="2"
+
+        <RelativeLayout
+            android:layout_weight="3"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp">
+
+            <ImageView
+                android:alpha="0.8"
+                android:scaleType="centerCrop"
+                android:src="@drawable/wood_pattern"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <RelativeLayout
+                android:background="@color/alpha"
+                android:layout_width="match_parent"
+                android:layout_height="68sp">
+
+                <ImageView
+                    android:layout_width="26sp"
+                    android:layout_height="26sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="70dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/radio" />
+
+                <TextView
+                    android:layout_marginLeft="115sp"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:textSize="21.5sp"
+                    android:textColor="@color/white"
+                    android:text="라디오"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageButton
+                    android:id="@+id/radio_back_btn"
+                    android:tint="@color/white"
+                    android:src="@drawable/ic_arrow_back_maincolor"
+                    android:background="@color/alpha"
+                    android:layout_marginLeft="15sp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitCenter"
+                    android:layout_width="36sp"
+                    android:layout_height="36sp" />
+
+                <ImageButton
+                    android:tint="@color/white"
+                    android:id="@+id/radio_channel_stop_and_start"
+                    android:layout_marginRight="15sp"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_pause_circle_outline_black"
+                    android:background="@color/alpha"
+                    android:layout_centerVertical="true"
+                    android:layout_width="48sp"
+                    android:layout_height="48sp" />
+            </RelativeLayout>
+
             <TextView
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
                 android:id="@+id/radio_channel_main_title"
-                android:layout_marginTop="20sp"
+                android:layout_marginTop="100sp"
                 android:textSize="17.5sp"
                 android:gravity="center"
-                android:textColor="@color/grey_700"
+                android:textColor="@color/white"
                 android:text="# Radio Channel Name"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <ImageView
+            <com.joooonho.SelectableRoundedImageView
+                app:sriv_left_top_corner_radius="15sp"
+                app:sriv_right_top_corner_radius="15sp"
+                app:sriv_left_bottom_corner_radius="15sp"
+                app:sriv_right_bottom_corner_radius="15sp"
+                android:paddingTop="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:alpha="1"
                 android:visibility="gone"
                 android:id="@+id/radio_channel_main_image"
                 android:scaleType="fitCenter"
@@ -89,10 +105,11 @@
                 android:id="@+id/radio_channel_progress"
                 android:indeterminateTint="@color/green_player"
                 android:layout_marginTop="65sp"
-                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_width="128sp"
                 android:layout_height="128sp" />
-        </LinearLayout>
+        </RelativeLayout>
         <com.yarolegovich.discretescrollview.DiscreteScrollView
             android:visibility="gone"
             android:id="@+id/radio_channel_list_view"

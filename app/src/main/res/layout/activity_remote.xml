@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey_200"
+    tools:context=".RemoteActivity">
+    <RelativeLayout
+        android:backgroundTint="@color/pupple_radio"
+        android:background="@drawable/actionbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="68sp">
+
+
+        <ImageView
+            android:layout_width="26sp"
+            android:layout_height="26sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/remote" />
+
+        <TextView
+            android:layout_marginLeft="85sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:textSize="21.5sp"
+            android:textColor="@color/white"
+            android:text="원격제어"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/remote_back_btn"
+            android:tint="@color/white"
+            android:src="@drawable/ic_arrow_back_maincolor"
+            android:background="@color/alpha"
+            android:layout_marginLeft="15sp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+
+        <ImageButton
+            android:tint="@color/white"
+            android:id="@+id/remote_add_btn"
+            android:layout_marginRight="15sp"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_add_circle_outline"
+            android:background="@color/alpha"
+            android:layout_centerVertical="true"
+            android:layout_width="48sp"
+            android:layout_height="48sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/remote_notify_text_view"
+            android:textStyle="bold|italic"
+            android:layout_marginTop="12sp"
+            android:layout_marginRight="12sp"
+            android:layout_marginLeft="12sp"
+            android:text="# Notify Text..."
+            android:textSize="14.5sp"
+            android:textColor="@color/grey_700"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:layout_marginTop="35sp"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/pupple_radio"
+            android:id="@+id/remote_progress"
+            android:layout_width="100sp"
+            android:layout_height="100sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/remote_device_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:background="@color/grey_400"
     tools:context=".RadioActivity">
     <RelativeLayout
         android:backgroundTint="@color/green_player"
@@ -43,15 +44,63 @@
             android:layout_height="36sp" />
 
         <ImageButton
-            android:id="@+id/led_color_off"
+            android:tint="@color/white"
+            android:id="@+id/radio_channel_stop_and_start"
             android:layout_marginRight="15sp"
             android:layout_alignParentRight="true"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_pause_circle_outline_black"
             android:background="@color/alpha"
             android:layout_centerVertical="true"
-            android:layout_width="36sp"
-            android:layout_height="36sp" />
+            android:layout_width="48sp"
+            android:layout_height="48sp" />
     </RelativeLayout>
-    
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:id="@+id/radio_channel_main_title"
+                android:layout_marginTop="20sp"
+                android:textSize="17.5sp"
+                android:gravity="center"
+                android:textColor="@color/grey_700"
+                android:text="# Radio Channel Name"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/radio_channel_main_image"
+                android:scaleType="fitCenter"
+                android:src="@drawable/noimage"
+                android:layout_margin="65sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ProgressBar
+                android:id="@+id/radio_channel_progress"
+                android:indeterminateTint="@color/green_player"
+                android:layout_marginTop="65sp"
+                android:layout_gravity="center"
+                android:layout_width="128sp"
+                android:layout_height="128sp" />
+        </LinearLayout>
+        <com.yarolegovich.discretescrollview.DiscreteScrollView
+            android:visibility="gone"
+            android:id="@+id/radio_channel_list_view"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/alpha"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -290,7 +290,8 @@ public class MainActivity extends AppCompatActivity {
         tab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getApplicationContext(), RadioActivity.class));
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
             }
         });
 

@@ -287,6 +287,8 @@ public class SettingsActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         nickNameNotify.setText(nick);
                         callAvaJustAlert("Ava 사용자 닉네임 변경", "성공적으로 변경되었습니다.");
+                        AvaApp.saveAvaRecentUserNickName(SettingsActivity.this, nick);
+                        AvaApp.AvaUserNickName = nick;
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

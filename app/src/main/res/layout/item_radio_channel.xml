@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160sp"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15sp"
+        android:layout_marginLeft="7sp"
+        android:layout_marginRight="7sp"
+        android:background="@drawable/round_white_box"
+        android:orientation="vertical"
+        android:minWidth="300sp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/item_radio_channel_image"
+            android:scaleType="fitCenter"
+            android:src="@drawable/noimage"
+            app:sriv_left_top_corner_radius="15sp"
+            app:sriv_right_top_corner_radius="15sp"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0sp" />
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/item_radio_channel_title"
+            android:textSize="14sp"
+            android:text="영화이름"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="0sp" />
+    </LinearLayout>
+</LinearLayout>

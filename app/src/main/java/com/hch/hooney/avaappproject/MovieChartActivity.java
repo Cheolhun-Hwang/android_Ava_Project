@@ -72,7 +72,7 @@ public class MovieChartActivity extends AppCompatActivity {
         noDataNotify = (TextView) findViewById(R.id.movie_chart_noData);
         discreteScrollView = (DiscreteScrollView) findViewById(R.id.movie_chart_movie_list);
         discreteScrollView.setItemTransformer(new ScaleTransformer.Builder().setMinScale(0.9f).build());
-        discreteScrollView.setSlideOnFling(false);
+        discreteScrollView.setSlideOnFling(true); //false : moving card one by one...;
 
         setEvent();
     }

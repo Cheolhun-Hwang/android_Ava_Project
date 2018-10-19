@@ -110,7 +110,9 @@ public class NickNameActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         AvaApp.saveFinishNickName(NickNameActivity.this, true);
                                         AvaApp.saveAvaRecentUserNickName(NickNameActivity.this, nickNameEdit.getText().toString());
+                                        AvaApp.AvaUserNickName = AvaApp.getAvaRecentUserNickName(NickNameActivity.this);
                                         AvaApp.saveAvaUserCode(NickNameActivity.this, userCode);
+                                        AvaApp.AvaUserCode = AvaApp.getAvaUserCode(NickNameActivity.this);
                                         if(init_process){
                                             intentWifi();
                                         }else{

@@ -122,7 +122,7 @@ public class AuthCodeActivity extends AppCompatActivity {
     }
 
     private void callAuthSignalToAva(){
-        final String checkCode = typingText.getText().toString();
+        final String checkCode = typingText.getText().toString().toUpperCase();
 
         AvaApp.fDatabase.getReference()
                 .child("Certification")
@@ -132,7 +132,7 @@ public class AuthCodeActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         boolean isExistKey = false;
                         for(DataSnapshot item : dataSnapshot.getChildren()){
-                            if(item.getKey().toLowerCase().equals(checkCode)){
+                            if(item.getKey().toUpperCase().equals(checkCode)){
                                 isExistKey = true;
                                 break;
                             }
@@ -182,7 +182,7 @@ public class AuthCodeActivity extends AppCompatActivity {
                     case 101:
                         //인증 성공.
                         AvaApp.saveFinishAuth(AuthCodeActivity.this, true, AvaDateTime.getNowDateTime());
-                        AvaApp.saveAvaDeviceCode(AuthCodeActivity.this, AvaApp.AvaCode);
+                        AvaApp.saveAvaDeviceCode(AuthCodeActivity.this, msg.obj.toString());
                         intentNickName();
                         break;
                     case 102 :
@@ -249,12 +249,13 @@ public class AuthCodeActivity extends AppCompatActivity {
                         }
 
                         if(AvaApp.AvaBle.getRes() != null){
-                            Log.d(TAG, "get Res : " + AvaApp.AvaBle.getRes().toLowerCase());
-                            Log.d(TAG, "typing : " + typingText.getText().toString().toLowerCase());
+                            Log.d(TAG, "get Res : " + AvaApp.AvaBle.getRes().toUpperCase());
+                            Log.d(TAG, "typing : " + typingText.getText().toString().toUpperCase());
                             if(equalKeys()){
                                 msg.what = 101;
+                                msg.obj = AvaApp.AvaBle.getRes().toUpperCase();
                             }else{
-                                Log.d(TAG, "RES : " + AvaApp.AvaBle.getRes());
+                                Log.d(TAG, "RES : " + AvaApp.AvaBle.getRes().toUpperCase());
                                 msg.obj = "[인증실패]\n인증키가 다릅니다.";
                                 msg.what = 104;
                             }

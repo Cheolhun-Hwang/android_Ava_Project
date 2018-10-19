@@ -58,7 +58,8 @@
         <activity
             android:name=".MelonChartActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".RadioActivity"></activity>
     </application>
 
 </manifest>

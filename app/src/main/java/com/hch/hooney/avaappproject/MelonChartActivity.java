@@ -62,7 +62,7 @@ public class MelonChartActivity extends AppCompatActivity {
         noDataNotify = (TextView) findViewById(R.id.melon_chart_noData);
         discreteScrollView = (DiscreteScrollView) findViewById(R.id.melon_chart_movie_list);
         discreteScrollView.setItemTransformer(new ScaleTransformer.Builder().setMinScale(0.9f).build());
-        discreteScrollView.setSlideOnFling(false);
+        discreteScrollView.setSlideOnFling(true);   //false : moving one by one card..
 
         setEvent();
     }

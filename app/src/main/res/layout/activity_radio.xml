@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".RadioActivity">
+    <RelativeLayout
+        android:backgroundTint="@color/green_player"
+        android:background="@drawable/actionbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="68sp">
+
+
+        <ImageView
+            android:layout_width="26sp"
+            android:layout_height="26sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/radio" />
+
+        <TextView
+            android:layout_marginLeft="85sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:textSize="21.5sp"
+            android:textColor="@color/white"
+            android:text="라디오"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/radio_back_btn"
+            android:tint="@color/white"
+            android:src="@drawable/ic_arrow_back_maincolor"
+            android:background="@color/alpha"
+            android:layout_marginLeft="15sp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+
+        <ImageButton
+            android:id="@+id/led_color_off"
+            android:layout_marginRight="15sp"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"
+            android:background="@color/alpha"
+            android:layout_centerVertical="true"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+    </RelativeLayout>
+    
+
+</LinearLayout>

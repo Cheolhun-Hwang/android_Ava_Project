@@ -219,6 +219,25 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         msg.obj = (JSONObject) daysArray.get(0);
                         msg.what = 101;
+
+                        if(AvaApp.fDatabase == null){
+                            AvaApp.initFDatabase();
+                        }
+
+                        AvaApp.fDatabase.getReference()
+                                .child("Certification")
+                                .child("Device")
+                                .child(AvaApp.AvaCode)
+                                .child("Location")
+                                .child("Lat")
+                                .setValue(AvaApp.AvaLat);
+                        AvaApp.fDatabase.getReference()
+                                .child("Certification")
+                                .child("Device")
+                                .child(AvaApp.AvaCode)
+                                .child("Location")
+                                .child("Lon")
+                                .setValue(AvaApp.AvaLon);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

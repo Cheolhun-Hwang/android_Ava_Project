@@ -61,7 +61,8 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".RadioActivity" />
         <activity android:name=".RemoteActivity" />
-        <activity android:name=".AddRemoteDeviceActivity"></activity>
+        <activity android:name=".AddRemoteDeviceActivity" />
+        <activity android:name=".RemoteDetailActivity"></activity>
     </application>
 
 </manifest>

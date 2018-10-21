@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey_200"
+    tools:context=".RemoteDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp">
+        <ImageButton
+            android:id="@+id/remote_detail_back"
+            android:layout_centerVertical="true"
+            android:background="@color/alpha"
+            android:tint="@color/black"
+            android:scaleType="fitXY"
+            android:layout_margin="5sp"
+            android:src="@drawable/ic_arrow_back_maincolor"
+            android:layout_width="36sp"
+            android:layout_height="36sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:tint="@color/pupple_radio"
+            android:src="@drawable/remote"
+            android:layout_width="match_parent"
+            android:layout_height="64sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/remote_detail_layout"
+        android:layout_marginTop="5sp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/remote_detail_device_name"
+            android:textSize="19sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/black"
+            android:layout_marginTop="15sp"
+            android:gravity="center"
+            android:text="# 00 장치"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/remote_detail_device_state"
+            android:textSize="13sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/black"
+            android:layout_marginTop="7sp"
+            android:gravity="center"
+            android:text="[ 현재 상태 : 00 ]"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/remote_detail_ctrl_btn_layout"
+            android:orientation="vertical"
+            android:layout_marginTop="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:indeterminateTint="@color/main_green"
+        android:id="@+id/remote_detail_progress"
+        android:layout_marginTop="60sp"
+        android:layout_gravity="center"
+        android:layout_width="128sp"
+        android:layout_height="128sp" />
+
+</LinearLayout>

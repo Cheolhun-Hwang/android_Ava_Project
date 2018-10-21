@@ -1,6 +1,8 @@
 package com.hch.hooney.avaappproject.ListPack.RemoteDevice;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hch.hooney.avaappproject.R;
+import com.hch.hooney.avaappproject.RemoteActivity;
 
 import java.util.ArrayList;
 
@@ -35,7 +38,7 @@ public class RemoteDeviceAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        RemoteDeviceDAO item = list.get(position);
+        final RemoteDeviceDAO item = list.get(position);
         if(item != null){
             RemoteDeviceHolder hold = (RemoteDeviceHolder)holder;
             hold.deviceName.setText(item.getDeviceName());
@@ -50,7 +53,21 @@ public class RemoteDeviceAdapter extends RecyclerView.Adapter {
             hold.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+                    alert.setTitle("Ava 원격제어");
+                    alert.setMessage(item.getDeviceName()+" 장치에 연결합니다.");
+                    alert.setPositiveButton("연결", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ((RemoteActivity) mContext).connectDetail(item.getDeviceMacAddress());
+                        }
+                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
                 }
             });
 

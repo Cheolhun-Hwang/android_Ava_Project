@@ -4,21 +4,17 @@ public class RemoteDeviceDAO {
     private String deviceName;
     private String deviceMacAddress;
     private boolean deviceUseFlag;
-    private String deviceServiceUUID;
 
     public RemoteDeviceDAO() {
         this.deviceName = null;
         this.deviceMacAddress = null;
         this.deviceUseFlag = false;
-        this.deviceServiceUUID = null;
     }
 
-    public RemoteDeviceDAO(String deviceName, String deviceMacAddress, boolean deviceUseFlag,
-                           String deviceServiceUUID) {
+    public RemoteDeviceDAO(String deviceName, String deviceMacAddress, boolean deviceUseFlag) {
         this.deviceName = deviceName;
         this.deviceMacAddress = deviceMacAddress;
         this.deviceUseFlag = deviceUseFlag;
-        this.deviceServiceUUID = deviceServiceUUID;
     }
 
     public String getDeviceName() {
@@ -45,11 +41,4 @@ public class RemoteDeviceDAO {
         this.deviceUseFlag = deviceUseFlag;
     }
 
-    public String getDeviceServiceUUID() {
-        return deviceServiceUUID;
-    }
-
-    public void setDeviceServiceUUID(String deviceServiceUUID) {
-        this.deviceServiceUUID = deviceServiceUUID;
-    }
 }

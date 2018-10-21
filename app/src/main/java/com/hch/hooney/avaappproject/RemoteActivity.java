@@ -88,7 +88,9 @@ public class RemoteActivity extends AppCompatActivity {
                 alert.setPositiveButton("검색", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getApplicationContext(), AddRemoteDeviceActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), AddRemoteDeviceActivity.class);
+                        intent.putExtra("beforeLength", deviceList.size());
+                        startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                     }
                 }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -124,7 +126,6 @@ public class RemoteActivity extends AppCompatActivity {
                             dao.setDeviceMacAddress(item.getKey());
                             dao.setDeviceName(map.get("localName").toString());
                             dao.setDeviceUseFlag(true); //must connect
-                            dao.setDeviceServiceUUID(map.get("serviceUUID").toString());
 
                            deviceList.add(dao);
                         }
@@ -162,5 +163,12 @@ public class RemoteActivity extends AppCompatActivity {
         if(deviceListView.getVisibility() == View.GONE){
             deviceListView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void connectDetail(String macAddress){
+        Intent intent = new Intent(getApplicationContext(), RemoteDetailActivity.class);
+        intent.putExtra("macAddress", macAddress);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 }

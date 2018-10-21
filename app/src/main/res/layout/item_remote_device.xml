@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/item_remote_background"
         android:paddingTop="20sp"
         android:paddingBottom="20sp"
         android:layout_marginTop="7.5sp"

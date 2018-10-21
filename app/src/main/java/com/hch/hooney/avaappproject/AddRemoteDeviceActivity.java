@@ -1,16 +1,22 @@
 package com.hch.hooney.avaappproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -18,9 +24,11 @@ import com.hch.hooney.avaappproject.Application.AvaApp;
 import com.hch.hooney.avaappproject.ListPack.RemoteDevice.AddRemoteDeviceAdapter;
 import com.hch.hooney.avaappproject.ListPack.RemoteDevice.RemoteDeviceAdapter;
 import com.hch.hooney.avaappproject.ListPack.RemoteDevice.RemoteDeviceDAO;
+import com.hch.hooney.avaappproject.SupportTool.AvaDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AddRemoteDeviceActivity extends AppCompatActivity {
     private final String TAG = AddRemoteDeviceActivity.class.getSimpleName();
@@ -31,13 +39,17 @@ public class AddRemoteDeviceActivity extends AppCompatActivity {
     private TextView notifyText;
     private ImageButton backBTN;
     private RecyclerView deviceListView;
+    private int beforeLength, nowLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_remote_device);
 
+        beforeLength = getIntent().getIntExtra("beforeLength", 0);
+
         init();
+        getRemoteDeviceList();
     }
 
     @Override
@@ -48,8 +60,6 @@ public class AddRemoteDeviceActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        getRemoteDeviceList();
     }
 
     private void init(){
@@ -89,16 +99,18 @@ public class AddRemoteDeviceActivity extends AppCompatActivity {
                 .child("Command")
                 .child(AvaApp.AvaCode)
                 .child("BleDevice")
-                .addValueEventListener(new ValueEventListener() {
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         deviceList.clear();
                         for(DataSnapshot item : dataSnapshot.getChildren()){
+                            if(item.getKey().toLowerCase().equals("log")){
+                                continue;
+                            }
                             HashMap<String, Object> map = (HashMap<String, Object>) item.getValue();
                             RemoteDeviceDAO dao = new RemoteDeviceDAO();
                             dao.setDeviceMacAddress(item.getKey());
                             dao.setDeviceName(map.get("localName").toString());
-                            dao.setDeviceServiceUUID(map.get("serviceUUID").toString());
 
                             if(map.get("connectable").toString().equals("true")){
                                 dao.setDeviceUseFlag(true);
@@ -142,6 +154,70 @@ public class AddRemoteDeviceActivity extends AppCompatActivity {
         if(deviceListView.getVisibility() == View.GONE){
             deviceListView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void addConnect(String macAddress){
+        Log.d(TAG, "Add Connect Method On");
+        deviceListView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("MAC_address", macAddress);
+        map.put("method", "connect");
+        AvaApp.fDatabase.getReference()
+                .child("Command")
+                .child(AvaApp.AvaCode)
+                .child("BleDevice")
+                .child("Log")
+                .child(AvaDateTime.getNowDateTime())
+                .setValue(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        nowLength = 0;
+                        AvaApp.fDatabase.getReference()
+                                .child("Command")
+                                .child(AvaApp.AvaCode)
+                                .child("AddDevice")
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                        for(DataSnapshot item : dataSnapshot.getChildren()){
+                                            nowLength++;
+                                        }
+
+                                        if(nowLength > beforeLength){
+                                            Toast.makeText(getApplicationContext(), "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                                            finishAddEvent();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        deviceListView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(AddRemoteDeviceActivity.this);
+                        alert.setTitle("Ava 원격제어 등록");
+                        alert.setMessage("등록에 실패하였습니다.\n잠시후 다시 시도해주세요.");
+                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alert.show();
+                    }
+                });
     }
 
 

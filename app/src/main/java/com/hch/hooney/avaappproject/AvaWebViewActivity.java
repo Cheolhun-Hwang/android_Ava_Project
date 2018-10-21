@@ -1,11 +1,16 @@
 package com.hch.hooney.avaappproject;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -46,8 +51,16 @@ public class AvaWebViewActivity extends AppCompatActivity {
             }
         });
         mainView = (WebView) findViewById(R.id.web_view);
+        mainView.setPadding(0,0,0,0);
         webSettings = mainView.getSettings();
+        webSettings.setUseWideViewPort(true);
+
+        webSettings.setAllowContentAccess(true);
+        webSettings.setDisplayZoomControls(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setSupportZoom(true);
         webSettings.setJavaScriptEnabled(true);
+
 
         mainView.setWebChromeClient(new WebChromeClient(){
             @Override
@@ -111,4 +124,5 @@ public class AvaWebViewActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
+
 }

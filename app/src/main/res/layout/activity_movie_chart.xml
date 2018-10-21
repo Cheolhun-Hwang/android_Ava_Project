@@ -22,19 +22,44 @@
             android:layout_width="36sp"
             android:layout_height="36sp" />
 
-        <Button
-            android:id="@+id/movie_chart_cgv"
-            android:layout_alignParentRight="true"
-            android:layout_margin="6sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:text="CGV"
-            android:background="#E42313"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="right"
+            android:layout_marginLeft="60sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/movie_chart_cgv"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:text="CGV"
+                android:backgroundTint="#E42313"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/movie_chart_megabox"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:text="MEGA BOX"
+                android:backgroundTint="#3A1F65"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/movie_chart_lotte"
+                android:textColor="@color/red_600"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:text="Lotte"
+                android:backgroundTint="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </RelativeLayout>
     <LinearLayout
+        android:layout_marginBottom="10sp"
+        android:layout_marginTop="20sp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

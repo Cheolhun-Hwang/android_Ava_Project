@@ -85,7 +85,7 @@ public class MelonChartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(MelonChartActivity.this);
                 alert.setTitle("Ava Melon");
-                alert.setMessage("더 알찬 정보를 위해 Melon 으로 이동합니다 !!");
+                alert.setMessage("더 알찬 정보를 위해 멜론으로 이동합니다!");
                 alert.setPositiveButton("이동", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -41,7 +41,7 @@ public class MovieChartActivity extends AppCompatActivity {
     private final String TAG = MovieChartActivity.class.getSimpleName();
 
     private ImageButton backBTN;
-    private Button CGVBTN;
+    private Button CGVBTN, LOTTEBTN, MAGABOXBTN;
     private DiscreteScrollView discreteScrollView;
     private ProgressBar progressBar;
     private TextView noDataNotify;
@@ -74,6 +74,8 @@ public class MovieChartActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.movie_chart_progress);
         backBTN = (ImageButton) findViewById(R.id.movie_chart_back);
         CGVBTN = (Button) findViewById(R.id.movie_chart_cgv);
+        LOTTEBTN = (Button) findViewById(R.id.movie_chart_lotte);
+        MAGABOXBTN = (Button) findViewById(R.id.movie_chart_megabox);
         noDataNotify = (TextView) findViewById(R.id.movie_chart_noData);
         discreteScrollView = (DiscreteScrollView) findViewById(R.id.movie_chart_movie_list);
         discreteScrollView.setItemTransformer(new ScaleTransformer.Builder().setMinScale(0.9f).build());
@@ -95,12 +97,62 @@ public class MovieChartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(MovieChartActivity.this);
                 alert.setTitle("Ava Movie");
-                alert.setMessage("더 알찬 정보를 위해 CGV 로 이동합니다 !!\n(단, 일부 영화는 상영하지 않을 수도 있습니다.)");
+                alert.setMessage("더 알찬 정보를 위해 CGV로 이동합니다!\n(단, 일부 영화는 상영하지 않을 수도 있습니다.)");
                 alert.setPositiveButton("이동", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplicationContext(), AvaWebViewActivity.class);
                         intent.putExtra("url", "http://m.cgv.co.kr/WebAPP/MovieV4/movieList.aspx?mtype=now&iPage=1");
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                    }
+                });
+                alert.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        MAGABOXBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MovieChartActivity.this);
+                alert.setTitle("Ava Movie");
+                alert.setMessage("더 알찬 정보를 위해 메가박스로 이동합니다!\n(단, 일부 영화는 상영하지 않을 수도 있습니다.)");
+                alert.setPositiveButton("이동", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), AvaWebViewActivity.class);
+                        intent.putExtra("url", "http://www.megabox.co.kr/?menuId=movie-showing");
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+                    }
+                });
+                alert.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        LOTTEBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MovieChartActivity.this);
+                alert.setTitle("Ava Movie");
+                alert.setMessage("더 알찬 정보를 위해 롯데시네마로 이동합니다!\n(단, 일부 영화는 상영하지 않을 수도 있습니다.)");
+                alert.setPositiveButton("이동", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), AvaWebViewActivity.class);
+                        intent.putExtra("url", "http://www.lottecinema.co.kr/LCHS/Contents/Movie/Movie-List.aspx");
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                     }

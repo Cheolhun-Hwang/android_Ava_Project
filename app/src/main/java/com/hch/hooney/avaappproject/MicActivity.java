@@ -99,6 +99,8 @@ public class MicActivity extends AppCompatActivity implements RecognitionListene
         finishAddEvent();
     }
 
+
+
     private Thread initOrderThread(){
         return new Thread(new Runnable() {
             @Override

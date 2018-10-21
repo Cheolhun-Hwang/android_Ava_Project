@@ -25,12 +25,11 @@
         <Button
             android:id="@+id/melon_chart_melon"
             android:layout_alignParentRight="true"
-            android:layout_margin="6sp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="15sp"
             android:text="Melon"
-            android:background="#00CD3C"
+            android:backgroundTint="#00CD3C"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

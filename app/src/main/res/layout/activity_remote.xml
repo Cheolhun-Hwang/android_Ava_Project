@@ -15,6 +15,7 @@
 
 
         <ImageView
+            android:id="@+id/remote_icon_image"
             android:layout_width="26sp"
             android:layout_height="26sp"
             android:layout_centerVertical="true"
@@ -23,7 +24,8 @@
             android:src="@drawable/remote" />
 
         <TextView
-            android:layout_marginLeft="85sp"
+            android:layout_alignLeft="@+id/remote_icon_image"
+            android:layout_marginLeft="35sp"
             android:layout_centerVertical="true"
             android:textStyle="bold"
             android:textSize="21.5sp"

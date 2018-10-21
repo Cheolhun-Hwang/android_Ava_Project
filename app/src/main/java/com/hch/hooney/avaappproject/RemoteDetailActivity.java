@@ -123,7 +123,7 @@ public class RemoteDetailActivity extends AppCompatActivity {
                         }else{
                             nowState = dataSnapshot.child("method").getValue().toString();
                         }
-                        deviceStateView.setText("[ " + nowState + " ]");
+                        deviceStateView.setText("[ 현재상태 : " + nowState + " ]");
                     }
 
                     @Override
@@ -186,7 +186,7 @@ public class RemoteDetailActivity extends AppCompatActivity {
 
     private void setUi(){
         deviceNameView.setText("# "+deviceName);
-        deviceStateView.setText("[ " + nowState + " ]");
+        deviceStateView.setText("[ 현재상태 : " + nowState + " ]");
 
 
         addButtons();

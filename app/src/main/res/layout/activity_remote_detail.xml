@@ -30,7 +30,7 @@
             android:tint="@color/pupple_radio"
             android:src="@drawable/remote"
             android:layout_width="match_parent"
-            android:layout_height="64sp" />
+            android:layout_height="100sp" />
 
     </LinearLayout>
 
@@ -67,6 +67,8 @@
             android:id="@+id/remote_detail_ctrl_btn_layout"
             android:orientation="vertical"
             android:layout_marginTop="17sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

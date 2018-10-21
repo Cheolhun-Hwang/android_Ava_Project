@@ -55,7 +55,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:text="@string/init_ask_blut_key"
                     android:textColor="@color/black"
                     android:textSize="13.5sp"

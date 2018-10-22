@@ -199,28 +199,28 @@
                     <TextView
                         android:textSize="13sp"
                         android:textColor="@color/grey_700"
-                        android:text="- 영화 순위"
+                        android:text="- 영화 추천"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:textSize="13sp"
                         android:textColor="@color/grey_700"
-                        android:text="- 오늘 영화 순위는?"
+                        android:text="- 영화 추천해줘?"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:textSize="13sp"
                         android:textColor="@color/grey_700"
-                        android:text="- 멜론 순위"
+                        android:text="- 멜론 추천"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:textSize="13sp"
                         android:textColor="@color/grey_700"
-                        android:text="- 오늘 멜론 순위는?"
+                        android:text="- 멜론 추천해줘?"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
